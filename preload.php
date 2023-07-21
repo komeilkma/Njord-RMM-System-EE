@@ -25,6 +25,7 @@
 
 // Load the paths config file
 require __DIR__ . '/app/Config/Paths.php';
+require_once FCPATH . 'vendor/autoload.php';
 
 // Path to the front controller
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
