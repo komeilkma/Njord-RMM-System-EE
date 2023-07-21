@@ -1,12 +1,13 @@
 {
-    "name": "Njord-RMM-System",
+    "name": "codexpert-ltd/njord-rmm-system",
     "type": "project",
     "description": "Njord Remote monitoring and management system for IoT Devices",
     "homepage": "http://iot.codexpertltd.co.uk/",
     "license": "MIT",
     "require": {
         "php": "^7.4 || ^8.0",
-        "codeigniter4/framework": "^4.0"
+        "codeigniter4/framework": "^4.0",
+        "vlucas/phpdotenv": "^5.5"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
