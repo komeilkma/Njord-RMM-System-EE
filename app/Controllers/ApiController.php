@@ -32,7 +32,9 @@ class ApiController extends ResourceController
             if (password_verify($data->password, $hashedPassword)) {
                 $key = getenv('api.jwt.secret');
                 $payload = [
+                    'time' => time(),
                     'username' => $data->username,
+                    'exp' => time() + 3600,
                 ];
                 $token = JWT::encode($payload, $key, 'HS256');
                 return $this->respond(['user' => $data->username, 'token' => $token]);
