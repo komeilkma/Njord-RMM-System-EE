@@ -1,5 +1,5 @@
 <?php
-
+use App\Controllers\ApiController;
 namespace Config;
 
 // Create a new instance of our RouteCollection class.
@@ -30,6 +30,12 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+
+
+$routes->get('/', 'ApiController::index');
+//temporary test
+$routes->get('api/(:num)', 'ApiController::getData/$1' ,['filter' => 'auth']);
+$routes->post('api/v1/authenticate', 'ApiController::authenticateUser');
 
 /*
  * --------------------------------------------------------------------
