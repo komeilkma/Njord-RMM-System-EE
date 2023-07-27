@@ -21,7 +21,7 @@ class ApiController extends ResourceController
     {
         $data = $this->request->getJSON();
 
-        
+    
         $db = \Config\Database::connect();
         $db->connect();
         $query = $db->table('users')->where('username', $data->username)->get();
@@ -47,6 +47,32 @@ class ApiController extends ResourceController
             return $this->failNotFound("profile was not found");
 
         }
+
+    }
+
+    public function Create_User() {
+        $data = $this->request->getJSON();
+        $invitation_code = getenv('api.invitation.code');
+        if ( $data->invitationcode == $invitation_code) {
+            $db = \Config\Database::connect();
+            $db->connect();
+            $querycheck = $db->table('users')->where('username', $data->username)->get();
+            if ($querycheck->getNumRows() === 1) {
+                return $this->failUnauthorized("Username Exist");
+            }else {
+            $query = $db->table('users');
+            $register_data = [
+                'username'       => $data->username,
+                'password'        => password_hash($data->password,PASSWORD_DEFAULT),
+            ];
+            $query->insert($register_data); 
+            return $this->respond(['user' => $data->username, 'status' => "Register Complete"]);
+        }
+        }else {
+
+            return $this->failUnauthorized("for register need invitation code");
+        }
+
 
     }
     

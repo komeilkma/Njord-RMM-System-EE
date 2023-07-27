@@ -36,6 +36,7 @@ $routes->get('/', 'ApiController::index');
 //temporary test
 $routes->get('api/(:num)', 'ApiController::getData/$1' ,['filter' => 'auth']);
 $routes->post('api/v1/authenticate', 'ApiController::authenticateUser');
+$routes->post('api/v1/creatuser', 'ApiController::Create_User');
 
 /*
  * --------------------------------------------------------------------
