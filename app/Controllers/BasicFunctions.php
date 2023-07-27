@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class BasicFunctions extends BaseController
 {
-    public function checkNotEmpty(array $jsonData, bool $allowZeroTag = false): bool
+    public function checkNotEmpty($jsonData, bool $allowZeroTag = false): bool
     {
         foreach ($jsonData as $value) {
             if ($allowZeroTag) {

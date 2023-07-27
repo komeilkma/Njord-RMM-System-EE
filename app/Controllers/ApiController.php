@@ -68,8 +68,8 @@ class ApiController extends ResourceController
             if ($querycheck->getNumRows() === 1) {
                 return $this->failResourceExists("Username Exist");
             }else {
-                
-            if ($this->BasicFunctions->Check_Empty($data,"disable")) {
+            
+            if ($this->BasicFunctions->checkNotEmpty($data,false)) {
                 $query = $db->table('users');
                 $register_data = [
                     'username'       => $data->username,
@@ -97,7 +97,7 @@ class ApiController extends ResourceController
         $db->connect();
 
         $querycheck = $db->table('gateways')->where('serial', $data->serial)->get();
-        if ($this->BasicFunctions->Check_Empty($data,"enable")) {
+        if ($this->BasicFunctions->checkNotEmpty($data,true)) {
         if ($querycheck->getNumRows() === 1) {
             $query = $db->table('gateways')->where('serial', $data->serial);
             $gateway_data = [
