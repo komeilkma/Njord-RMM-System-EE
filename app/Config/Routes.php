@@ -34,10 +34,11 @@ $routes->get('/', 'Home::index');
 
 $routes->get('/', 'ApiController::index');
 //temporary test
-$routes->get('api/(:num)', 'ApiController::getData/$1' ,['filter' => 'auth']);
-$routes->post('api/v1/authenticate', 'ApiController::authenticateUser');
+$routes->get('api/v1/gatewaydata/(:segment)', 'ApiController::Get_Gateway_Data/$1' ,['filter' => 'auth']);
+$routes->post('api/v1/authenticate', 'ApiController::Authenticate_User');
 $routes->post('api/v1/creatuser', 'ApiController::Create_User');
-$routes->post('api/v1/insertgateway', 'ApiController::insert_gateway_data' ,['filter' => 'auth']);
+$routes->post('api/v1/insertgateway', 'ApiController::Insert_Gateway_Data' ,['filter' => 'auth']);
+$routes->post('api/v1/gatewayalerts', 'ApiController::Get_Gateway_Alerts' ,['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------
