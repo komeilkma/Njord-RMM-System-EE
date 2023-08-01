@@ -166,7 +166,11 @@ class ApiController extends ResourceController
         $data = $this->request->getJSON();
         $db = \Config\Database::connect();
         $db->connect();
-        $querycheck = $db->table('alerts')->where('serial', $data->serial)->limit(10, (intval($data->page)-1) * 10)->get();
+        if ($data->descending_order){
+        $querycheck = $db->table('alerts')->where('serial', $data->serial)->orderBy('id', 'DESC')->limit(10, (intval($data->page)-1) * 10)->get();
+        }else {
+        $querycheck = $db->table('alerts')->where('serial', $data->serial)->limit(10, (intval($data->page)-1) * 10)->get();  
+        }
          if ($querycheck->getNumRows() >= 1) {
             $alarms = $querycheck->getResultArray();
             foreach ($alarms as &$object) {
@@ -178,6 +182,29 @@ class ApiController extends ResourceController
         }else {
 
             return $this->failNotFound("gateway was not found");
+
+        }
+
+
+    }
+
+
+
+    public function Get_Gateways_List() {
+
+        $data = $this->request->getJSON();
+        $db = \Config\Database::connect();
+        $db->connect();
+        if ($data->descending_order){
+        $querycheck = $db->table('gateways')->orderBy('id', 'DESC')->limit(10, (intval($data->page)-1) * 10)->get();
+        }else {
+        $querycheck = $db->table('gateways')->limit(10, (intval($data->page)-1) * 10)->get();
+        }
+         if ($querycheck->getNumRows() >= 1) {
+        return $this->respond(['page' => $data->page, 'gateways' => $querycheck->getResultArray() ]);
+        }else {
+
+            return $this->failNotFound("There is no gateway");
 
         }
 
