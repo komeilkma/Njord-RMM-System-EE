@@ -34,12 +34,13 @@ $routes->get('/', 'Home::index');
 
 $routes->get('/', 'ApiController::index');
 //temporary test
-$routes->get('api/v1/gatewaydata/(:segment)', 'ApiController::Get_Gateway_Data/$1' ,['filter' => 'auth']);
-$routes->post('api/v1/authenticate', 'ApiController::Authenticate_User');
-$routes->post('api/v1/creatuser', 'ApiController::Create_User');
-$routes->post('api/v1/insertgateway', 'ApiController::Insert_Gateway_Data' ,['filter' => 'auth']);
-$routes->post('api/v1/gatewayalerts', 'ApiController::Get_Gateway_Alerts' ,['filter' => 'auth']);
-$routes->post('api/v1/gatewayslist', 'ApiController::Get_Gateways_List' ,['filter' => 'auth']);
+$routes->get('api/v1/custom/gatewaydata/(:segment)', 'ApiController::Get_Gateway_Data/$1' ,['filter' => 'auth']);
+$routes->post('api/v1/custom/authenticate', 'ApiController::Authenticate_User');
+$routes->post('api/v1/custom/creatuser', 'ApiController::Create_User');
+$routes->post('api/v1/custom/insertgateway', 'ApiController::Insert_Gateway_Data' ,['filter' => 'auth']);
+$routes->post('api/v1/custom/gatewayalerts', 'ApiController::Get_Gateway_Alerts' ,['filter' => 'auth']);
+$routes->post('api/v1/custom/gatewayslist', 'ApiController::Get_Gateways_List' ,['filter' => 'auth']);
+$routes->get('api/v1/general/(:num)', 'GeneralApiController::getData/$1' ,['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------

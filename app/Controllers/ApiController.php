@@ -20,7 +20,7 @@ class ApiController extends ResourceController
 
         $db = \Config\Database::connect();
         $db->connect();
-        $query = $db->table('gateways')->where('serial', $id)->get();
+        $query = $db->table('customgateways')->where('serial', $id)->get();
         $gw_data = $query->getRow();
         if ($query->getNumRows() === 1) {
         $gateway_data = [
@@ -51,10 +51,10 @@ class ApiController extends ResourceController
     
         $db = \Config\Database::connect();
         $db->connect();
-        $query = $db->table('users')->where('username', $data->username)->get();
+        $query = $db->table('users')->where('Username', $data->username)->get();
         if ($query->getNumRows() === 1) {
             $user = $query->getRow();
-            $hashedPassword = $user->password;
+            $hashedPassword = $user->PasswordHash;
 
             if (password_verify($data->password, $hashedPassword)) {
                 $key = getenv('api.jwt.secret');
@@ -83,17 +83,18 @@ class ApiController extends ResourceController
         if ( $data->invitationcode == $invitation_code) {
             $db = \Config\Database::connect();
             $db->connect();
-            $querycheck = $db->table('users')->where('username', $data->username)->get();
-            if ($querycheck->getNumRows() === 1) {
-                return $this->failResourceExists("Username Exist");
+            $querycheck = $db->table('users')->where('Username', $data->username)->orWhere('email', $data->email)->get();
+            if ($querycheck->getNumRows() > 0) {
+                return $this->failResourceExists("User Exist");
             }else {
-            
+
             if ($this->BasicFunctions->checkNotEmpty($data,false)) {
                 $query = $db->table('users');
                 $register_data = [
-                    'username'       => $data->username,
-                    'password'        => password_hash($data->password,PASSWORD_DEFAULT),
-                    'email'        => $data->email,
+                    'Username'       => $data->username,
+                    'PasswordHash'        => password_hash($data->password,PASSWORD_DEFAULT),
+                    'Email'        => $data->email,
+                    'UserRole'        => "user",
                 ];
                 $query->insert($register_data); 
                 return $this->respond(['user' => $data->username, 'status' => "Register Complete"]);
@@ -115,11 +116,11 @@ class ApiController extends ResourceController
         $db = \Config\Database::connect();
         $db->connect();
 
-        $querycheck = $db->table('gateways')->where('serial', $data->serial)->get();
+        $querycheck = $db->table('customgateways')->where('serial', $data->serial)->get();
         if ($this->BasicFunctions->checkNotEmpty($data,true)) {
         if ($querycheck->getNumRows() === 1) {
             $old_status_data = $querycheck->getRow()->status_data;
-            $query = $db->table('gateways')->where('serial', $data->serial);
+            $query = $db->table('customgateways')->where('serial', $data->serial);
             $gateway_data = [
                 'status_data'       => $data->status_data,
                 'motor_data'       => $data->motor_data,
@@ -130,7 +131,7 @@ class ApiController extends ResourceController
                 'configstat'        => $data->configstat,
             ];
             if ( $old_status_data != $data->status_data) {
-                $alertquery = $db->table('alerts');
+                $alertquery = $db->table('customalerts');
                 $alert_gateway_data = [
                     'status_data'       => $data->status_data,
                     'motor_data'       => $data->motor_data,
@@ -141,7 +142,7 @@ class ApiController extends ResourceController
             $query->update($gateway_data); 
             return $this->respond(['serial' => $data->serial, 'status' => "gateway data updated"]);
         }else {
-            $query = $db->table('gateways');
+            $query = $db->table('customgateways');
             $gateway_data = [
                 'status_data'       => $data->status_data,
                 'motor_data'       => $data->motor_data,
@@ -167,9 +168,9 @@ class ApiController extends ResourceController
         $db = \Config\Database::connect();
         $db->connect();
         if ($data->descending_order){
-        $querycheck = $db->table('alerts')->where('serial', $data->serial)->orderBy('id', 'DESC')->limit(10, (intval($data->page)-1) * 10)->get();
+        $querycheck = $db->table('customalerts')->where('serial', $data->serial)->orderBy('id', 'DESC')->limit(10, (intval($data->page)-1) * 10)->get();
         }else {
-        $querycheck = $db->table('alerts')->where('serial', $data->serial)->limit(10, (intval($data->page)-1) * 10)->get();  
+        $querycheck = $db->table('customalerts')->where('serial', $data->serial)->limit(10, (intval($data->page)-1) * 10)->get();  
         }
          if ($querycheck->getNumRows() >= 1) {
             $alarms = $querycheck->getResultArray();
@@ -196,9 +197,9 @@ class ApiController extends ResourceController
         $db = \Config\Database::connect();
         $db->connect();
         if ($data->descending_order){
-        $querycheck = $db->table('gateways')->orderBy('id', 'DESC')->limit(10, (intval($data->page)-1) * 10)->get();
+        $querycheck = $db->table('customgateways')->orderBy('id', 'DESC')->limit(10, (intval($data->page)-1) * 10)->get();
         }else {
-        $querycheck = $db->table('gateways')->limit(10, (intval($data->page)-1) * 10)->get();
+        $querycheck = $db->table('customgateways')->limit(10, (intval($data->page)-1) * 10)->get();
         }
          if ($querycheck->getNumRows() >= 1) {
         return $this->respond(['page' => $data->page, 'gateways' => $querycheck->getResultArray() ]);
