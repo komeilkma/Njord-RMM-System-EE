@@ -129,6 +129,7 @@ class ApiController extends ResourceController
                 'imei'        => $data->imei,
                 'softversion'        => $data->softversion,
                 'configstat'        => $data->configstat,
+                'shamsi_date'        => $this->BasicFunctions->shamsi_date('Y-m-d , H:i',time(), 0),
             ];
             if ( $old_status_data != $data->status_data) {
                 $alertquery = $db->table('customalerts');
@@ -136,6 +137,7 @@ class ApiController extends ResourceController
                     'status_data'       => $data->status_data,
                     'motor_data'       => $data->motor_data,
                     'serial'       => $data->serial,
+                    'shamsi_date'        => $this->BasicFunctions->shamsi_date('Y-m-d , H:i',time(), 0),
                 ];
                 $alertquery->insert($alert_gateway_data);
             }
@@ -151,6 +153,8 @@ class ApiController extends ResourceController
                 'imei'        => $data->imei,
                 'softversion'        => $data->softversion,
                 'configstat'        => $data->configstat,
+                'shamsi_date'        => $this->BasicFunctions->shamsi_date('Y-m-d , H:i',time(), 0),
+                'first_connection'        => $this->BasicFunctions->shamsi_date('Y-m-d , H:i',time(), 0),
             ];
             $query->insert($gateway_data); 
             return $this->respond(['serial' => $data->serial, 'status' => "new gateway inserted"]);
