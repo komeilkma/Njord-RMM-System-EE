@@ -26,7 +26,7 @@ class ApiController extends ResourceController
         $gateway_data = [
             'id'       => $gw_data->id,
             'status_data'       => $this->BasicFunctions->Convert_Status_Data($gw_data->status_data),
-            'motor_data'       => $gw_data->motor_data,
+            'motor_data'       => $this->BasicFunctions->Convert_Motor_Data($gw_data->motor_data),
             'serial'       => $gw_data->serial,
             'imsi'        => $gw_data->imsi,
             'imei'        => $gw_data->imei,

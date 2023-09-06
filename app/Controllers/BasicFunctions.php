@@ -40,6 +40,34 @@ class BasicFunctions extends BaseController
 
     }
 
+    public function Convert_Motor_Data($motor_data) {
+        $motor_data_array = array();
+        preg_match('/motor\((.*?)\)/', $motor_data, $matches_motor);
+        if ($matches_motor[1] == "motor-connect-fail" ) {
+            $motor_data_array["frequency"]="0";
+            $motor_data_array["bus_voltage"]="0";
+            $motor_data_array["output_voltage"]="0";
+            $motor_data_array["output_current"]="0";
+            $motor_data_array["output_power"]="0";
+            $motor_data_array["output_torque"]="0";
+            $motor_data_array["motor_temperature"]="0";
+            $motor_data_array["error_code"]="0";
+
+        }else {
+            $motor_split=str_split($matches_motor[1], 4);
+            $motor_data_array["frequency"]=number_format(hexdec($motor_split[1])/100,2);
+            $motor_data_array["bus_voltage"]=number_format(hexdec($motor_split[2])/10,2);
+            $motor_data_array["output_voltage"]=hexdec($motor_split[3]);
+            $motor_data_array["output_current"]=number_format(hexdec($motor_split[4])/100,2);
+            $motor_data_array["output_power"]=hexdec($motor_split[5]);
+            $motor_data_array["output_torque"]=hexdec($motor_split[6]);
+            $motor_data_array["motor_temperature"]=hexdec($motor_split[7]);
+            $motor_data_array["error_code"]=hexdec($motor_split[8]);
+             }
+
+        return $motor_data_array;
+    }
+
     
     public function shamsi_date($format, $when="now", $persianNumber = 0)
     {
