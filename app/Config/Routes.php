@@ -33,6 +33,7 @@ $routes->get('/', 'Login::index');
 $routes->get('/Dashboard', 'Pages::dashboard');
 $routes->get('/Dashboard/DMG', 'Pages::DMG');
 $routes->get('/', 'ApiController::index');
+
 //temporary test
 $routes->get('api/v1/custom/gatewaydata/(:segment)', 'ApiController::Get_Gateway_Data/$1' ,['filter' => 'auth']);
 $routes->post('api/v1/custom/authenticate', 'ApiController::Authenticate_User');
@@ -40,6 +41,8 @@ $routes->post('api/v1/custom/creatuser', 'ApiController::Create_User',['filter' 
 $routes->post('api/v1/custom/insertgateway', 'ApiController::Insert_Gateway_Data' ,['filter' => 'auth']);
 $routes->post('api/v1/custom/gatewayalerts', 'ApiController::Get_Gateway_Alerts' ,['filter' => 'auth']);
 $routes->post('api/v1/custom/gatewayslist', 'ApiController::Get_Gateways_List' ,['filter' => 'auth']);
+$routes->post('api/v1/custom/gatewayalertcount', 'ApiController::Get_Alerts_Count' ,['filter' => 'auth']);
+$routes->post('api/v1/custom/gatewaycount', 'ApiController::Get_Gateways_Count' ,['filter' => 'auth']);
 $routes->get('api/v1/general/(:num)', 'GeneralApiController::getData/$1' ,['filter' => 'auth']);
 
 /*,
