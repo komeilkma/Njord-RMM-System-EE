@@ -148,14 +148,14 @@
     function updateThemeSetting(id) {
         if($("#light-mode-switch").prop("checked") == true && id === "light-mode-switch"){
             $("#dark-mode-switch").prop("checked", false);
-            $("#bootstrap-style").attr('href','assets/css/bootstrap.min.css');
-            $("#app-style").attr('href','assets/css/app.css');
-            sessionStorage.setItem("is_visited", "light-mode-switch");
+           // $("#bootstrap-style").attr('href','assets/css/bootstrap.min.css');
+           // $("#app-style").attr('href','assets/css/app.css');
+          //  sessionStorage.setItem("is_visited", "light-mode-switch");
         } else if($("#dark-mode-switch").prop("checked") == true && id === "dark-mode-switch"){
             $("#light-mode-switch").prop("checked", false);
-            $("#bootstrap-style").attr('href','assets/css/bootstrap-dark.min.css');
-            $("#app-style").attr('href','assets/css/app-dark.css');
-            sessionStorage.setItem("is_visited", "dark-mode-switch");
+          //  $("#bootstrap-style").attr('href','assets/css/bootstrap-dark.min.css');
+          //  $("#app-style").attr('href','assets/css/app-dark.css');
+          //  sessionStorage.setItem("is_visited", "dark-mode-switch");
         }
     }
 

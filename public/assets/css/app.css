@@ -1394,6 +1394,10 @@ body[data-layout="detached"] .page-title-box .breadcrumb-item.active, body[data-
   background: rgba(255, 255, 255, 0.4);
 }
 
+text {
+    fill: #fff;
+}
+
 .waves-notransition {
   -webkit-transition: none !important;
   transition: none !important;
