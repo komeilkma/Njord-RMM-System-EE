@@ -33,6 +33,7 @@ $routes->get('/', 'Login::index');
 $routes->get('/Dashboard', 'Pages::dashboard');
 $routes->get('/Dashboard/DMG', 'Pages::DMG');
 $routes->get('/', 'ApiController::index');
+
 //temporary test
 $routes->get('api/v1/custom/gatewaydata/(:segment)', 'ApiController::Get_Gateway_Data/$1' ,['filter' => 'auth']);
 $routes->post('api/v1/custom/authenticate', 'ApiController::Authenticate_User');
